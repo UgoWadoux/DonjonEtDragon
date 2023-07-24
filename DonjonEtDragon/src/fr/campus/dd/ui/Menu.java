@@ -54,8 +54,6 @@ public class Menu {
                 String characterChange = inputModif.nextLine();
 
                 if (characterChange.equals("A")) {
-
-
 //                    System.out.println(character.toString());
                     HeroesDb hero = new HeroesDb();
                     hero.getHeroes();

@@ -192,17 +192,17 @@ public class HeroesDb {
                 offWeapon = resultats.getString("OffensivWeapon");
                 System.out.println();
             }
-            System.out.println(type);
-            System.out.println(HP);
-            System.out.println(ATK);
-            System.out.println(name);
-            System.out.println(defWeapon);
-            System.out.println(offWeapon);
+//            System.out.println(type);
+//            System.out.println(HP);
+//            System.out.println(ATK);
+//            System.out.println(name);
+//            System.out.println(defWeapon);
+//            System.out.println(offWeapon);
             Gson gson =new Gson();
             EquipementOffensif equipementOffensif = gson.fromJson(offWeapon, EquipementOffensif.class);
             EquipementDefensif equipementDefensif =gson.fromJson(defWeapon, EquipementDefensif.class);
-            System.out.println(equipementOffensif);
-            System.out.println(equipementDefensif);
+//            System.out.println(equipementOffensif);
+//            System.out.println(equipementDefensif);
             assert type != null;
             if (type.equals("Guerriers")){
                 this.character = new Guerriers(name,HP,ATK,equipementDefensif,equipementOffensif);

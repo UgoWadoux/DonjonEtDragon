@@ -1,8 +1,7 @@
 package fr.campus.dd.ui.cases;
 
 import fr.campus.dd.equipment.EquipementOffensif;
-import fr.campus.dd.equipment.offenseweapons.Arme;
-import fr.campus.dd.equipment.offenseweapons.Sort;
+import fr.campus.dd.equipment.offenseweapons.*;
 
 import java.util.Random;
 
@@ -19,15 +18,25 @@ public class WeaponCase implements Case{
     @Override
     public void display() {
         Random r = new Random();
-        int n = r.nextInt(2);
-        System.out.println(n);
+        int n = r.nextInt(6);
+//        System.out.println(n);
         if (n==0){
             this.offensifWeapong = new Arme();
-            offensifWeapong.setOffensePoint(11);
         }
         if (n==1){
             this.offensifWeapong = new Sort();
-            offensifWeapong.setOffensePoint(5);
+        }
+        if (n==2){
+            this.offensifWeapong = new BoulesDeFeu();
+        }
+        if (n==3){
+            this.offensifWeapong = new Eclairs();
+        }
+        if (n==4){
+            this.offensifWeapong = new Massue();
+        }
+        if (n==5){
+            this.offensifWeapong = new Epee();
         }
     }
 

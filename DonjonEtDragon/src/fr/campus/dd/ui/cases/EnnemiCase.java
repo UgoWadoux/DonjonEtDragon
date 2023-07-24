@@ -21,7 +21,7 @@ public class EnnemiCase implements Case {
     public void display() {
         Random r = new Random();
         int n = r.nextInt(3);
-        System.out.println(n);
+//        System.out.println(n);
         if (n==0){
             this.ennemi =new Gobelin("Jack");
         }

@@ -2,8 +2,8 @@ package fr.campus.dd.equipment;
 
 import fr.campus.dd.character.Personnage;
 
-public class Potion {
-    private int addHealthPoint =5;
+public class PotionMax {
+    private int addHealthPoint =10;
 
     public int getAddHealthPoint() {
         return addHealthPoint;

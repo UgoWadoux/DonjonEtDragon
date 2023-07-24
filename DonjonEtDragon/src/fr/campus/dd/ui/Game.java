@@ -1,6 +1,8 @@
 package fr.campus.dd.ui;
 
 import fr.campus.dd.character.Personnage;
+import fr.campus.dd.character.types.Guerriers;
+import fr.campus.dd.character.types.Magiciens;
 import fr.campus.dd.database.DbManager;
 import fr.campus.dd.database.HeroesDb;
 import fr.campus.dd.equipment.Potion;
@@ -12,6 +14,7 @@ import fr.campus.dd.ui.exception.PersonnageHorsPlateauException;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -56,6 +59,8 @@ public class Game {
 
             if (continueGame.equals("N")) {
                 System.out.println("Aurevoir");
+                System.out.println(" ");
+                System.out.println(" ");
                 return;
             }
 
@@ -86,21 +91,14 @@ public class Game {
     }
 
     public void tryRound() {
-        setBoard(3);
+        setBoard(64);
         setPositionPlayer(0);
         int dice = 1;
 
-        EnnemiCase ennemiCase = new EnnemiCase();
-        PotionCase potionCase = new PotionCase();
-        WeaponCase weaponCase =new WeaponCase();
-        EmptyCase emptyCase = new EmptyCase();
-        ArrayList<Case> board1 = new ArrayList<Case>();
-        board1.add(0, emptyCase);
-        board1.add(1, ennemiCase);
-        board1.add(2,weaponCase);
-        board1.add(3, potionCase);
 
-        HeroesDb heroesDb =new HeroesDb();
+        ArrayList<Case> board1 = new ArrayList<Case>();
+
+        HeroesDb heroesDb = new HeroesDb();
         heroesDb.getHeroes();
         System.out.println("Choisissez votre joueur :");
         String name;
@@ -110,42 +108,72 @@ public class Game {
         heroesDb.getOneHeroe(name);
         this.perso = heroesDb.getCharacter();
 //        System.out.println(board1.size());
-        for (int i = 0; i < board1.size(); i++) {
+        int min = 1;
+        int max = 6;
 
+        for (int i = 0; i < 64; i++) {
+            EnnemiCase ennemiCase = new EnnemiCase();
+            EmptyCase emptyCase = new EmptyCase();
+            PotionCase potionCase = new PotionCase();
+            WeaponCase weaponCase = new WeaponCase();
+
+            for (int j =0; j<64; j++){
+                Random r = new Random();
+                int n = r.nextInt(4);
+                if (n==0){
+                    board1.add(j,emptyCase);
+                }else if (n==1){
+                    board1.add(j,ennemiCase);
+                }else if (n==2){
+                    board1.add(j,potionCase);
+                }else {
+                    board1.add(j,weaponCase);
+                }
+            }
+
+            dice = (int) (Math.random() * (max - min + 1) + min);
+            i+= dice-1;
+            Scanner scanner = new Scanner(System.in);
+            String wait = scanner.nextLine();
+            System.out.println("Vous jetez le dé, vous avancez de:  " +dice );
+            positionPlayer = i;
             System.out.print("position du joueur: " + positionPlayer + " ");
             System.out.println(" Case: " + board1.get(i));
-            if (board1.get(i)==ennemiCase){
-                Fight fight=new Fight(perso,ennemiCase.getEnnemi());
+            if (board1.get(i)instanceof EnnemiCase) {
+//                System.out.println(ennemiCase.getEnnemi());
+                Fight fight = new Fight(perso, ennemiCase.getEnnemi());
                 fight.fighting();
             }
-            if (board1.get(i)==potionCase){
+            if (board1.get(i) instanceof PotionCase) {
                 potionCase.addPotion(perso);
-            }if (board1.get(i)==weaponCase){
-                System.out.println(weaponCase.getOffensifWeapong().getClass().getSimpleName());
+            }
+            if (board1.get(i) instanceof WeaponCase) {
+//                System.out.println(weaponCase.getOffensifWeapong().getClass().getSimpleName());
                 String nameWeapon = weaponCase.getOffensifWeapong().getClass().getSimpleName();
                 String classe = perso.getClass().getSimpleName();
-                int OffensePointCase = weaponCase.getOffensifWeapong().getOffensePoint();
-                int OffensePointWeaponHero =  perso.getOffensiveEquipment().getOffensePoint();
-                System.out.println(classe);
-                if (nameWeapon.equals("Arme") && classe.equals("Guerriers")){
-                    if (OffensePointCase >OffensePointWeaponHero){
-                        System.out.println("|Vous récupérez l'arme |");
-                        perso.setOffensiveEquipment(weaponCase.getOffensifWeapong());
-                        heroesDb.editHero(perso, perso.getName());
-                    }
+                int offensePointCase = weaponCase.getOffensifWeapong().getOffensePoint();
+                int offensePointWeaponHero = perso.getOffensiveEquipment().getOffensePoint();
+//                System.out.println(classe);
+                if (weaponCase.getOffensifWeapong() instanceof Arme && perso instanceof Guerriers && offensePointCase > offensePointWeaponHero) {
+//                    if (OffensePointCase >OffensePointWeaponHero){
+                    System.out.println("|Vous récupérez l'arme |");
+                    perso.setOffensiveEquipment(weaponCase.getOffensifWeapong());
+                    heroesDb.editHero(perso, perso.getName());
+//                    }
                     System.out.println("nouvelle arme guerrier");
-                } else if(nameWeapon.equals("Sort") && classe.equals("Magiciens")){
-                    if (OffensePointCase >OffensePointWeaponHero){
-                        System.out.println("|Vous récupérez le sort |");
-                        perso.setOffensiveEquipment(weaponCase.getOffensifWeapong());
-                        heroesDb.editHero(perso, perso.getName());
-                    }
-                }else {
+                } else if (weaponCase.getOffensifWeapong() instanceof Sort && perso instanceof Magiciens && offensePointCase > offensePointWeaponHero) {
+//                    if (OffensePointCase >OffensePointWeaponHero){
+                    System.out.println("|Vous récupérez le sort |");
+                    perso.setOffensiveEquipment(weaponCase.getOffensifWeapong());
+                    heroesDb.editHero(perso, perso.getName());
+//                    }
+                } else {
                     System.out.println("| Vous ne récupérez rien |");
                 }
             }
-            positionPlayer += dice;
-            board -= dice;
+
+
         }
+        board =0;
     }
 }

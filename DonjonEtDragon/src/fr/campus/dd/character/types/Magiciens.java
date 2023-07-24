@@ -7,12 +7,20 @@ import fr.campus.dd.equipment.defenseweapons.Philtre;
 import fr.campus.dd.equipment.offenseweapons.Sort;
 
 public class Magiciens extends Personnage {
+    EquipementOffensif equipementOffensif;
+    EquipementDefensif equipementDefensif;
     public Magiciens( String name) {
         super(name);
-        setAttackStrength(15);
+        setAttackStrength(1);
         setHealthPoint(6);
-        setOffensiveEquipment(new Sort());
-        setDefensiveEquipment(new Philtre());
+        this.equipementOffensif= new Sort();
+        equipementOffensif.setName("Sort du débutant");
+        equipementOffensif.setOffensePoint(2);
+        this.equipementDefensif = new Philtre();
+        equipementDefensif.setName("Philtre du débutant");
+        equipementDefensif.setDefensePoint(1);
+        setOffensiveEquipment(equipementOffensif);
+        setDefensiveEquipment(equipementDefensif);
     }
     public Magiciens(String name, int HP, int ATK, EquipementDefensif equipementDefensif, EquipementOffensif equipementOffensif){
         super(name);

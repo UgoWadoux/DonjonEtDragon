@@ -7,6 +7,7 @@ import fr.campus.dd.character.types.Magiciens;
 import fr.campus.dd.database.DbManager;
 import fr.campus.dd.database.HeroesDb;
 import fr.campus.dd.equipment.Potion;
+import fr.campus.dd.equipment.offenseweapons.Eclairs;
 import fr.campus.dd.ui.Fight;
 import fr.campus.dd.ui.Menu;
 import fr.campus.dd.ui.cases.*;

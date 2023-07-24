@@ -5,7 +5,7 @@ import fr.campus.dd.equipment.EquipementOffensif;
 public class Sort extends EquipementOffensif {
     public Sort() {
         setType(this.getClass().getSimpleName());
-        setName("Baton de sagesse ultime");
-        setOffensePoint(2);
+        setName("Endoloris");
+        setOffensePoint(10);
     }
 }

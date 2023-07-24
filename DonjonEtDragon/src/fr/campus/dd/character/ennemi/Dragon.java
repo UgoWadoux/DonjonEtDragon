@@ -7,6 +7,7 @@ public class Dragon extends Personnage {
         super(name);
         setAttackStrength(4);
         setHealthPoint(15);
+
     }
 
     @Override

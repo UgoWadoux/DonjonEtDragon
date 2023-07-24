@@ -30,7 +30,7 @@ public class PotionCase implements Case{
         heroesDb.changeLifePoint(personnage, personnage.getHealthPoint()+potion.getAddHealthPoint());
         potion.setAddHealthPoint(personnage);
         System.out.println(personnage);
-        heroesDb.getHeroes();
+//        heroesDb.getHeroes();
     }
     @Override
     public String toString() {
